@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Visualization Demo</title>
+		<!-- <meta name="description" content="" />
+		<meta name="keywords" content="" /> -->
+		<!-- <link href="main.css" type="text/css" rel="stylesheet" /> -->
+		<script type="text/javascript" src="visualization.js"></script>
+		<style>
+			#map-canvas {
+				width: 800px;
+				height: 600px;
+			}
+		</style>
+	</head>
+	<body>
+		<button onclick="calcRoute()">Generate Route</button>
+		<div id="map-canvas"></div>
+
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPQ6-9x_BCjSzId9KBa1shTezPQoDgrg8&signed_in=true&callback=initMap"
+            async defer></script>
+	</body>
+</html>
