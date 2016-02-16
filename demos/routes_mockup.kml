@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+	<name>Routes Mockup</name>
+
+	<Style id="good-route">
+		<LineStyle>
+			<color>ff00ff00</color>
+		</LineStyle>
+	</Style>
+	<Style id="bad-route">
+		<LineStyle>
+			<color>ff0000ff</color>
+		</LineStyle>
+	</Style>
+
+	<Placemark>
+		<name>Good Route</name>
+		<styleUrl>good-route</styleUrl>
+		<LineString>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>
+				143.841,-37.553,0
+				144.951,-37.799,0
+			</coordinates>
+		</LineString>
+	</Placemark>
+
+	<Placemark>
+		<name>Bad Route</name>
+		<styleUrl>bad-route</styleUrl>
+		<LineString>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>
+				143.841,-37.553,0
+				144.349,-38.141,0
+				144.951,-37.799,0
+			</coordinates>
+		</LineString>
+	</Placemark>
+</Document>
+</kml>
