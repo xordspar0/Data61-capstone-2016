@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+	<name>Styles Test</name>
+
+	<Style id="blue-box">
+		<PolyStyle>
+			<color>ffffff00</color>
+		</PolyStyle>
+	</Style>
+
+	<Placemark>
+		<name>Box 1</name>
+		<Polygon>
+			<extrude>1</extrude>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						144,-38,300
+						144,-39,300
+						145,-39,300
+						145,-38,300
+						144,-38,300
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+
+	<Placemark>
+		<name>Box 2</name>
+		<styleUrl>#blue-box</styleUrl>
+		<Polygon>
+			<extrude>1</extrude>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						145.5,-38,300
+						145.5,-39,300
+						146.5,-39,300
+						146.5,-38,300
+						145.5,-38,300
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>
