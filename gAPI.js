@@ -19,6 +19,8 @@ function calcRoute() {
 	};
 	gDirectionsService.route(request, function(result, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
+			//console.log(response.routes[0].overview_path[0].lat());
+			exportkml();
 			alert("success");
 			gDirectionsDisplay.setDirections(result);
 		}
