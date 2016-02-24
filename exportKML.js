@@ -1,6 +1,12 @@
-function exportKML(){
+function exportKML(coordPairs) {
+	// Build the string to put as a text node in the LineString.
+	var routeCoordString = "";
+	for (var i = 0; i < coordPairs.length; i++) {
+		routeCoordString += coordPairs[i].lng + "," + coordPairs[i].lat + "," + 0 + " ";
+	}
+	
 	var kmlns = "http://www.opengis.net/kml/2.2"
-	var kmlroot = document.implementation.createDocument (kmlns, "kml", null);
+	var kmlroot = document.implementation.createDocument(kmlns, "kml", null);
 	var Document = document.createElement("Document");
 	kmlroot.documentElement.appendChild(Document);
 	var styleGoodRoute = document.createElement("Style");
@@ -35,7 +41,7 @@ function exportKML(){
 			route1.appendChild(route1LineString);
 			route1Coords = document.createElement("coordinates");
 			route1LineString.appendChild(route1Coords);
-			route1CoordsValues = document.createTextNode("143.841,-37.553,0 144.951,-37.799,0");
+			route1CoordsValues = document.createTextNode(routeCoordString);
 			route1Coords.appendChild(route1CoordsValues);
 	
 	var s = new XMLSerializer();

@@ -19,8 +19,16 @@ function calcRoute() {
 	};
 	gDirectionsService.route(request, function(result, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
-			//console.log(response.routes[0].overview_path[0].lat());
-			var kmlDoc = exportKML(result);
+			// [0..311] lat: 123 lng: 123
+			var coordPairs = [];
+			for (var i = 0; i < result.routes[0].overview_path.length; i++) {
+				coordPairs.push(
+					{ lng: result.routes[0].overview_path[i].lng(),
+					  lat: result.routes[0].overview_path[i].lat()
+					});
+			}
+			var kmlDoc = exportKML(coordPairs);
+			
 			var downloadButton = document.getElementById("download-button");
 			downloadButton.setAttribute("href", "data:application/vnd.google-earth.kml+xml;charset=utf-8,"
 				+ encodeURIComponent(kmlDoc));
