@@ -14,17 +14,17 @@ function exportKML(coordPairs) {
 		Document.appendChild(styleGoodRoute);
 		var LineStyle = document.createElementNS(kmlns, "LineStyle");
 		styleGoodRoute.appendChild(LineStyle);
-		var Color = document.createElementNS(kmlns, "Color");
-		LineStyle.appendChild(Color);
-		Color.appendChild(document.createTextNode("ff00ff00"));
+		var color = document.createElementNS(kmlns, "color");
+		LineStyle.appendChild(color);
+		color.appendChild(document.createTextNode("ff00ff00"));
 	var styleBadRoute = document.createElementNS(kmlns, "Style");
 		styleBadRoute.setAttribute("id", "bad-route");
 		Document.appendChild(styleBadRoute);
 		var LineStyle = document.createElementNS(kmlns, "LineStyle");
 		styleBadRoute.appendChild(LineStyle);
-		var Color = document.createElementNS(kmlns, "Color");
-		LineStyle.appendChild(Color);
-		Color.appendChild(document.createTextNode("ff0000ff"));
+		var color = document.createElementNS(kmlns, "color");
+		LineStyle.appendChild(color);
+		color.appendChild(document.createTextNode("ff0000ff"));
 	var route1 = document.createElementNS(kmlns, "Placemark");
 		Document.appendChild(route1);
 		var route1Name = document.createElementNS(kmlns, "name")
