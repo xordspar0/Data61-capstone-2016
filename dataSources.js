@@ -18,6 +18,10 @@ function importSocialMedia() {
 
 				demoKMLExporter.addPoint(pointName, pointText, pointCoords);
 			}
+
+			alert("Retrieving data was successful.");
+		} else {
+			alert("Retrieving data failed with HTTP response: " + demoXMLHttpRequest.status);
 		}
 	};
 
