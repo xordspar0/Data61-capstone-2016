@@ -32,7 +32,7 @@ var KMLExporter = function () {
 			var colorYelp = document.createElementNS(this.xmlns, "color")
 			LabelStyleYelp.appendChild(colorYelp);
 			var colorModeYelp = document.createElementNS(this.xmlns, "colorMode")
-			LabelStyleYelp.appendChild(colorYelp);
+			LabelStyleYelp.appendChild(colorModeYelp);
 			colorYelp.appendChild(document.createTextNode("ff00ffff"));
 			colorModeYelp.appendChild(document.createTextNode("normal"));
 		var styleTweet =  document.createElementNS(this.xmlns, "Style");
@@ -41,9 +41,9 @@ var KMLExporter = function () {
 			var LabelStyleTweet =  document.createElementNS(this.xmlns, "LabelStyle");
 			styleTweet.appendChild(LabelStyleTweet);
 			var colorTweet = document.createElementNS(this.xmlns, "color")
-			LabelStyleTweet.appendChild(colorYelp);
+			LabelStyleTweet.appendChild(colorTweet);
 			var colorModeTweet = document.createElementNS(this.xmlns, "colorMode")
-			LabelStyleTweet.appendChild(colorYelp);
+			LabelStyleTweet.appendChild(colorModeTweet);
 			colorTweet.appendChild(document.createTextNode("ffff0000"));
 			colorModeTweet.appendChild(document.createTextNode("normal"));
 			
