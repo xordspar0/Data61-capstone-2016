@@ -11,11 +11,11 @@
 		{ "type: "Feature",
 		  "geometry": {"type": "Point", "coordinates":[144.886541,-37.825919,0]},
 		  "properties": {"NAME": "Tweet", "TEXT": "Westgate Golf Club in Spotswood!", "USER": "Jordan Christiansen"}
-		  }
+		  },
 		{ "type: "Feature",
 		  "geometry": {"type": "Point", "coordinates":[144.517617,-37.690448,0]},
 		  "properties": {"NAME": "Yelp", "TEXT": "Long Forest!", "USER": "Sean Warne"}
-		}
+		},
 		{ "type: "Feature",
 		  "geometry": {"type": "Point", "coordinates":[144.007459,-37.556941,0]},
 		  "properties": {NAME": "Yelp", "TEXT": "Bungaree Primary School!", "USER": "Iman Avazpour"}
