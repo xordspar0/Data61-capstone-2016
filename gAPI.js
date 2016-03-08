@@ -1,6 +1,5 @@
 var gDirectionsService;
 var gMap;
-var demoKMLExporter;
 
 var currentRating = "good"; //temporary for demo
 
@@ -10,7 +9,6 @@ function initMap() {
 		zoom: 8,
 		center: { lat: -37.811106, lng: 144.962160 }
 	});
-	demoKMLExporter = new KMLExporter();
 }
 
 /*

@@ -7,6 +7,7 @@
 		<!-- <link href="main.css" type="text/css" rel="stylesheet" /> -->
 		<script type="text/javascript" src="../gAPI.js"></script>
 		<script type="text/javascript" src="../KMLExporter.js"></script>
+		<script type="text/javascript" src="../dataSources.js"></script>
 		<style>
 			#map-canvas {
 				width: 800px;
@@ -16,11 +17,15 @@
 	</head>
 	<body>
 		<button onclick="requestRoutes()">Generate Route</button>
-		<a href="" id="download-button" download="route.kml" style="visibility: hidden">Download KML</button>
+		<button onclick="importSocialMedia()">Import from Social Media</button>
+		<a href="" id="download-button" download="route.kml" style="visibility: hidden">Download KML</a>
 		<div id="map-canvas"></div>
 		
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAckvZi0REJrul6Ne0ncb4WrTfFPrfHFYU&signed_in=true&callback=initMap"
 	    	async defer></script>
 
+		<script>
+			var demoKMLExporter = new KMLExporter();
+		</script>
 	</body>
 </html>

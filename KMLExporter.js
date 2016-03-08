@@ -26,7 +26,7 @@ var KMLExporter = function () {
 			colorBad.appendChild(document.createTextNode("ff0000ff"));
 		var styleYelp =  document.createElementNS(this.xmlns, "Style");
 			styleYelp.setAttribute("id", this.styleURLYelp);
-			this.Document.appendchild(styleYelp);
+			this.Document.appendChild(styleYelp);
 			var LabelStyleYelp =  document.createElementNS(this.xmlns, "LabelStyle");
 			styleYelp.appendChild(LabelStyleYelp);
 			var colorYelp = document.createElementNS(this.xmlns, "color")
@@ -37,7 +37,7 @@ var KMLExporter = function () {
 			colorModeYelp.appendChild(document.createTextNode("normal"));
 		var styleTweet =  document.createElementNS(this.xmlns, "Style");
 			styleTweet.setAttribute("id", this.styleURLTweet);
-			this.Document.appendchild(styleTweet);
+			this.Document.appendChild(styleTweet);
 			var LabelStyleTweet =  document.createElementNS(this.xmlns, "LabelStyle");
 			styleTweet.appendChild(LabelStyleTweet);
 			var colorTweet = document.createElementNS(this.xmlns, "color")
@@ -57,9 +57,6 @@ var KMLExporter = function () {
  * where the rating string is "good" or "bad".
  */
 KMLExporter.prototype.addRoute = function (route) {
-	console.log("entered addRoute");
-	console.log(route);
-	
 	// Convert the list of coordinates to a KML-compliant string.
 	var coordString = "";
 	for (var i = 0; i < route.coordinates.length; i++) {
@@ -84,8 +81,6 @@ KMLExporter.prototype.addRoute = function (route) {
 	} else if (route.rating == "bad") {
 		KMLRouteStyle.appendChild(document.createTextNode(this.styleURLBad));
 	}
-	
-	console.log(KMLRoute);
 }
 
 KMLExporter.prototype.addPoint =  function(name, descriptionText, coordinates) {
@@ -94,17 +89,17 @@ KMLExporter.prototype.addPoint =  function(name, descriptionText, coordinates) {
 		this.Document.appendChild(KMLPoint);
 		var KMLPointName = document.createElementNS(this.xmlns, "name");
 		KMLPoint.appendChild(KMLPointName);
-		KMLPointName.appendchild(document.createTextNode("test point"));
-		var KMLpointStyle = document.createElementNS(this.xmlns, "styleUrl");
+		KMLPointName.appendChild(document.createTextNode(name));
+		var KMLPointStyle = document.createElementNS(this.xmlns, "styleUrl");
 		KMLPoint.appendChild(KMLPointStyle);
 		var point = document.createElementNS(this.xmlns, "Point");
 		KMLPoint.appendChild(point);
 		var KMLcoordinates = document.createElementNS(this.xmlns, "coordinates");
 		point.appendChild(KMLcoordinates);
-		KMLcoordinates.appendchild(document.createTextNode(coordinates));
+		KMLcoordinates.appendChild(document.createTextNode(coordinates));
 		var KMLdescription = document.createElementNS(this.xmlns, "description");
 		KMLPoint.appendChild(KMLdescription);
-		KMLdescription.appendChild((document.createTextNode(descriptionText));)
+		KMLdescription.appendChild(document.createTextNode(descriptionText));
 		
 		if (name == "Yelp"){
 			KMLPointStyle.appendChild(document.createTextNode(this.styleURLYelp));
