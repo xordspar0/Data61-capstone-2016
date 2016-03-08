@@ -20,7 +20,7 @@ function importSocialMedia() {
 			}
 
 			alert("Retrieving data was successful.");
-		} else {
+		} else if (demoXMLHttpRequest.status != 0 && demoXMLHttpRequest.status != 200) {
 			alert("Retrieving data failed with HTTP response: " + demoXMLHttpRequest.status);
 		}
 	};
