@@ -2,6 +2,8 @@ var gDirectionsService;
 var gMap;
 var demoKMLExporter;
 
+var currentRating = "good"; //temporary for demo
+
 function initMap() {
 	gDirectionsService = new google.maps.DirectionsService();
 	gMap = new google.maps.Map(document.getElementById("map-canvas"), {
@@ -54,13 +56,20 @@ function calcRoute(request) {
 					});
 			}
 			
-			//TODO: Get the rating from some external source.
-			demoKMLExporter.addRoute({coordinates: coordPairs, rating: "good"})
+			demoKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating})
 
 			var gDirectionsDisplay = new google.maps.DirectionsRenderer();
 			gDirectionsDisplay.setMap(gMap);
 			gDirectionsDisplay.setDirections(result);
 			
+			//TODO: Get the rating from some external source.
+			if (currentRating == "good") {
+				currentRating = "bad";
+			}
+			else if (currentRating == "bad") {
+				currentRating = "good";
+			}
+
 			return coordPairs;
 		}
 		else {
