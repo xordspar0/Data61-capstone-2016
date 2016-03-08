@@ -1,6 +1,8 @@
 var KMLExporter = function () {
 	this.styleURLGood = "good-route";
 	this.styleURLBad = "bad-route";
+	this.styleURLYelp = "yelp-point";
+	this.styleURLTweet = "tweet-point";
 	this.xmlns = "http://www.opengis.net/kml/2.2";
 	
 	this.kmlroot = document.implementation.createDocument(this.xmlns, "kml", null);
@@ -22,6 +24,30 @@ var KMLExporter = function () {
 			var colorBad = document.createElementNS(this.xmlns, "color");
 			LineStyleBad.appendChild(colorBad);
 			colorBad.appendChild(document.createTextNode("ff0000ff"));
+		var styleYelp =  document.createElementNS(this.xmlns, "Style");
+			styleYelp.setAttribute("id", this.styleURLYelp);
+			this.Document.appendchild(styleYelp);
+			var LabelStyleYelp =  document.createElementNS(this.xmlns, "LabelStyle");
+			styleYelp.appendChild(LabelStyleYelp);
+			var colorYelp = document.createElementNS(this.xmlns, "color")
+			LabelStyleYelp.appendChild(colorYelp);
+			var colorModeYelp = document.createElementNS(this.xmlns, "colorMode")
+			LabelStyleYelp.appendChild(colorYelp);
+			colorYelp.appendChild(document.createTextNode("ff00ffff"));
+			colorModeYelp.appendChild(document.createTextNode("normal"));
+		var styleTweet =  document.createElementNS(this.xmlns, "Style");
+			styleTweet.setAttribute("id", this.styleURLTweet);
+			this.Document.appendchild(styleTweet);
+			var LabelStyleTweet =  document.createElementNS(this.xmlns, "LabelStyle");
+			styleTweet.appendChild(LabelStyleTweet);
+			var colorTweet = document.createElementNS(this.xmlns, "color")
+			LabelStyleTweet.appendChild(colorYelp);
+			var colorModeTweet = document.createElementNS(this.xmlns, "colorMode")
+			LabelStyleTweet.appendChild(colorYelp);
+			colorTweet.appendChild(document.createTextNode("ffff0000"));
+			colorModeTweet.appendChild(document.createTextNode("normal"));
+			
+			
 }
 
 /**
@@ -60,6 +86,32 @@ KMLExporter.prototype.addRoute = function (route) {
 	}
 	
 	console.log(KMLRoute);
+}
+
+KMLExporter.prototype.addPoint =  function(name, descriptionText, coordinates) {
+	
+	var KMLPoint = document.createElementNS(this.xmlns, "Placemark");
+		this.Document.appendChild(KMLPoint);
+		var KMLPointName = document.createElementNS(this.xmlns, "name");
+		KMLPoint.appendChild(KMLPointName);
+		KMLPointName.appendchild(document.createTextNode("test point"));
+		var KMLpointStyle = document.createElementNS(this.xmlns, "styleUrl");
+		KMLPoint.appendChild(KMLPointStyle);
+		var point = document.createElementNS(this.xmlns, "Point");
+		KMLPoint.appendChild(point);
+		var KMLcoordinates = document.createElementNS(this.xmlns, "coordinates");
+		point.appendChild(KMLcoordinates);
+		KMLcoordinates.appendchild(document.createTextNode(coordinates));
+		var KMLdescription = document.createElementNS(this.xmlns, "description");
+		KMLPoint.appendChild(KMLdescription);
+		KMLdescription.appendChild((document.createTextNode(descriptionText));)
+		
+		if (name == "Yelp"){
+			KMLPointStyle.appendChild(document.createTextNode(this.styleURLYelp));
+		} else if (name == "Tweet") {
+			KMLPointStyle.appendChild(document.createTextNode(this.styleURLTweet));
+		}
+		
 }
 
 KMLExporter.prototype.getKML = function () {
