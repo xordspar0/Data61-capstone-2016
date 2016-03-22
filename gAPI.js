@@ -17,18 +17,19 @@ function initMap() {
 function requestRoutes() {
 	var route1request = {
 		origin: "Ballarat, VIC",
+		provideRouteAlternatives: true,
 		destination: "Melbourne, VIC",
 		travelMode: google.maps.TravelMode.DRIVING
 	};
-	var route2request = {
-		origin: "Ballarat, VIC",
+	//var route2request = {
+/* 		origin: "Ballarat, VIC",
 		destination: "Melbourne, VIC",
 		waypoints: [{location: "Geelong, VIC", stopover: false}],
 		travelMode: google.maps.TravelMode.DRIVING
-	};
+	}; */
 	
 	var route1Coords = calcRoute(route1request);
-	var route2Coords = calcRoute(route2request);
+	//var route2Coords = calcRoute(route2request);
 	
 	// Delay before updating the download button so that the asyncronous calls
 	// to the Google Directions Service have time to finish.
@@ -46,15 +47,18 @@ function requestRoutes() {
 function calcRoute(request) {
 	gDirectionsService.route(request, function(result, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
-			var coordPairs = [];
-			for (var i = 0; i < result.routes[0].overview_path.length; i++) {
-				coordPairs.push(
-					{ lng: result.routes[0].overview_path[i].lng(),
-					  lat: result.routes[0].overview_path[i].lat()
-					});
+			var coordPairs;
+			for(var j = 0; j < result.routes.length; j++){
+				coordPairs = [];
+				for (var i = 0; i < result.routes[j].overview_path.length; i++) {
+					coordPairs.push(
+						{ lng: result.routes[j].overview_path[i].lng(),
+						  lat: result.routes[j].overview_path[i].lat()
+						});
+				}
+				demoKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating})
 			}
 			
-			demoKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating})
 
 			var gDirectionsDisplay = new google.maps.DirectionsRenderer();
 			gDirectionsDisplay.setMap(gMap);
