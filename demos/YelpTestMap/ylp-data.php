@@ -5,10 +5,10 @@ function GetYelpData($Lat, $Long, $Term)
 {
 	$URL = "http://api.yelp.com/v2/search?ll=" .
 	$Lat . "," . $Long . "&term=" . $Term;
-	$ConsumerKey = "Your Consumer Key";
-	$ConsumerSecret = "Your Consumer Secret";
-	$Token = "Your Token";
-	$TokenSecret = "Your Token Secret";
+	$ConsumerKey = "T2DjgHUDfXqCVXFdzQuEyg";
+	$ConsumerSecret = "gC0W0kYmTKq9mrkN2CR1QmWAXuE";
+	$Token = "lIaB6UdYdJaUkCYxuQQN7hmmd0fh2ZsF";
+	$TokenSecret = "xOB7z9te3dltNHjPIeZ4si3oPjs";
 	
 	$AuthToken = new OAuthToken($Token, $TokenSecret);
 	$Consumer = new OAuthConsumer($ConsumerKey, $ConsumerSecret);

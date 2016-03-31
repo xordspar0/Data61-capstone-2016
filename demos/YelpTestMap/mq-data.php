@@ -4,7 +4,7 @@ function GetGeoData($DataIn)
 {
 	//Generate a URL using the data passed in
 	$Format = "json";
-	$Key = "Your Map Quest Key";
+	$Key = "O142mayXnc0dI9Ej1efNOZzOghUvPdwd";
 	$URL = "http://www.mapquestapi.com/geocoding/v1/batch?outFormat=" . $Format . "&key=" . $Key;
 	
 	for($i=0; $i<count($DataIn); ++$i)
