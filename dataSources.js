@@ -8,15 +8,26 @@ function importSocialMedia() {
 			socialMediaData = JSON.parse(demoXMLHttpRequest.responseText);
 
 			// Add each point to the KML document.
-			var pointName;
-			var pointText;
+			var photoURL;
+			var htmlstring;
+			var contentString;
+			var photoTitle;
+			var latitude;
+			var longitude;
+			
+			//Variable to be deleted once addPoint function accomodates separate latitude and longitude
 			var pointCoords;
-			for (var i = 0; i < socialMediaData.features.length; i++) {
-				pointName = socialMediaData.features[i].properties.NAME;
-				pointText = socialMediaData.features[i].properties.TEXT;
-				pointCoords = socialMediaData.features[i].geometry.coordinates;
+			
+			for (var i = 0; i < socialMediaData.photo.length; i++) {
+				photoURL = 'https://farm'+ socialMediaData.photo[i].farm + '.static.flickr.com/'+ socialMediaData.photo[i].server + '/' + socialMediaData.photo[i].id + '_' + socialMediaData.photo[i].secret + '_m.jpg';
+				htmlstring = '<img src="' + photoURL + '">';
+				contentString = '<div id="content">' + htmlstring + '</div>';
+				photoTitle = socialMediaData.photo[i].title;
+				latitude = socialMediaData.photo[i].latitude;
+				longitude = socialMediaData.photo[i].longitude;
 
-				demoKMLExporter.addPoint(pointName, pointText, pointCoords);
+				//Change to support latitude and longitude separately
+				demoKMLExporter.addPoint(photoTitle, contentString, pointCoords);
 			}
 
 			alert("Retrieving data was successful.");
@@ -25,7 +36,7 @@ function importSocialMedia() {
 		}
 	};
 
-	demoXMLHttpRequest.open("GET", "mockupTweets.geojson", true);
+	demoXMLHttpRequest.open("GET", "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=8425bb55f2c56baebbde2f8c980189c5&tags=melbourne&has_geo=1&format=json&nojsoncallback=1", true);
 	demoXMLHttpRequest.send();
 
 	setTimeout(function () {
