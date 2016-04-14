@@ -48,6 +48,24 @@ function calcRoute(request) {
 	gDirectionsService.route(request, function(result, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
 			var coordPairs;
+
+			var numRoutes = result.routes.length;
+			var distances = [];
+			for(var j = 0; j < result.routes.length; j++){
+				console.log(j);
+				distances.push(result.routes[j].legs[0].distance.value)
+			}
+			sortedDistances = distances.slice();
+			sortedDistances.sort(function(a, b){return a-b});
+			distanceRankings = []
+			for(var x = 0; x < distances.length; x++){
+				for(var y = 0; y < sortedDistances.length; y++){
+					if(distances[x] === sortedDistances[y]){
+						distanceRankings.push(y);
+					}
+				}
+			}
+			console.log(distanceRankings);
 			for(var j = 0; j < result.routes.length; j++){
 				coordPairs = [];
 				for (var i = 0; i < result.routes[j].overview_path.length; i++) {
@@ -56,7 +74,8 @@ function calcRoute(request) {
 						  lat: result.routes[j].overview_path[i].lat()
 						});
 				}
-				demoKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating})
+				console.log("distanceRanking of route " + j + " is " + distanceRankings[j]);
+				demoKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating}, distanceRankings[j], numRoutes);
 			}
 			
 
@@ -79,3 +98,4 @@ function calcRoute(request) {
 		}
 	});
 }
+
