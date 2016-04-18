@@ -27,7 +27,7 @@ function importSocialMedia() {
 				longitude = socialMediaData.photo[i].longitude;
 
 				//Change to support latitude and longitude separately
-				demoKMLExporter.addPoint(photoTitle, contentString, pointCoords);
+				routeKMLExporter.addPoint(photoTitle, contentString, pointCoords);
 			}
 
 			alert("Retrieving data was successful.");
@@ -40,7 +40,7 @@ function importSocialMedia() {
 	demoXMLHttpRequest.send();
 
 	setTimeout(function () {
-		var kmlDoc = demoKMLExporter.getKML();
+		var kmlDoc = routeKMLExporter.getKML();
 	
 		var downloadButton = document.getElementById("download-button");
 		downloadButton.setAttribute("href", "data:application/vnd.google-earth.kml+xml;charset=utf-8,"

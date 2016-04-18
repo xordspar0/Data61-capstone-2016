@@ -1,44 +1,50 @@
 var gDirectionsService;
 var gMap;
+var kmlLayer;
 
 var currentRating = "good"; //temporary for demo
 
 function initMap() {
+	// Initialize the map.
 	gDirectionsService = new google.maps.DirectionsService();
 	gMap = new google.maps.Map(document.getElementById("map-canvas"), {
-		zoom: 8,
-		center: { lat: -37.811106, lng: 144.962160 }
+		center: { lat: -37.811106, lng: 144.962160 },
+		zoom: 8
 	});
+
+	// Initialize the KmlLayer.
+	var kmlOptions = {
+		map: gMap
+	}
+	kmlLayer = new google.maps.KmlLayer(kmlOptions);
 }
 
 /*
  * Define some demo routes to display and call the Google API on each one.
  */
 function requestRoutes() {
-	var route1request = {
+	var routeRequest = {
 		origin: "Ballarat, VIC",
 		provideRouteAlternatives: true,
 		destination: "Melbourne, VIC",
 		travelMode: google.maps.TravelMode.DRIVING
 	};
-	//var route2request = {
-/* 		origin: "Ballarat, VIC",
-		destination: "Melbourne, VIC",
-		waypoints: [{location: "Geelong, VIC", stopover: false}],
-		travelMode: google.maps.TravelMode.DRIVING
-	}; */
 	
-	var route1Coords = calcRoute(route1request);
-	//var route2Coords = calcRoute(route2request);
+	var routeCoords = calcRoute(routeRequest);
 	
 	// Delay before updating the download button so that the asyncronous calls
 	// to the Google Directions Service have time to finish.
 	setTimeout(function () {
-		var kmlDoc = demoKMLExporter.getKML();
+		var kmlDoc = routeKMLExporter.getKML();
+		kmlUrl = "data:application/vnd.google-earth.kml+xml;charset=utf-8,"
+			+ encodeURIComponent(kmlDoc);
 	
+		// Update the map.
+		kmlLayer.setUrl("https://developers.google.com/maps/tutorials/kml/westcampus.kml");
+
+		// Update the download button.
 		var downloadButton = document.getElementById("download-button");
-		downloadButton.setAttribute("href", "data:application/vnd.google-earth.kml+xml;charset=utf-8,"
-			+ encodeURIComponent(kmlDoc));
+		downloadButton.setAttribute("href", kmlUrl);
 		downloadButton.setAttribute("style", "");
 	}, 1000);
 
@@ -74,14 +80,13 @@ function calcRoute(request) {
 						  lat: result.routes[j].overview_path[i].lat()
 						});
 				}
+<<<<<<< HEAD
+				routeKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating})
+=======
 				console.log("distanceRanking of route " + j + " is " + distanceRankings[j]);
 				demoKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating}, distanceRankings[j], numRoutes);
+>>>>>>> master
 			}
-			
-
-			var gDirectionsDisplay = new google.maps.DirectionsRenderer();
-			gDirectionsDisplay.setMap(gMap);
-			gDirectionsDisplay.setDirections(result);
 			
 			//TODO: Get the rating from some external source.
 			if (currentRating == "good") {
