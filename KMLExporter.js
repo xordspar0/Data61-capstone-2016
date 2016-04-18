@@ -56,13 +56,28 @@ var KMLExporter = function () {
  * {coordinates: Array<{lng: number, lat: number}>, rating: string}
  * where the rating string is "good" or "bad".
  */
-KMLExporter.prototype.addRoute = function (route) {
+KMLExporter.prototype.addRoute = function (route, distanceRanking, numRoutes) {
 	// Convert the list of coordinates to a KML-compliant string.
 	var coordString = "";
 	for (var i = 0; i < route.coordinates.length; i++) {
 		coordString += route.coordinates[i].lng + "," + route.coordinates[i].lat + "," + 0 + " ";
 	}
 	
+	var routeWidth = (Math.floor(20*((numRoutes - distanceRanking)/numRoutes))).toString();
+	console.log("KMLExporter ran with distanceRanking:" + distanceRanking + " routeWidth: " + routeWidth +" numRoutes: "+numRoutes)
+	
+	var distanceStyle = document.createElementNS(this.xmlns, "Style");
+		this.Document.appendChild(distanceStyle);
+		distanceStyle.setAttribute("id", "distance-"+distanceRanking);
+		var distanceLineStyle = document.createElementNS(this.xmlns, "LineStyle");
+		distanceStyle.appendChild(distanceLineStyle);
+		var distanceColor = document.createElementNS(this.xmlns, "color");
+		distanceLineStyle.appendChild(distanceColor);
+		distanceColor.appendChild(document.createTextNode("ff0000ff"));
+		var distanceWidth = document.createElementNS(this.xmlns, "width");
+		distanceLineStyle.appendChild(distanceWidth);
+		distanceWidth.appendChild(document.createTextNode(routeWidth));
+		
 	var KMLRoute = document.createElementNS(this.xmlns, "Placemark");
 		this.Document.appendChild(KMLRoute);
 		var KMLRouteName = document.createElementNS(this.xmlns, "name");
@@ -75,15 +90,18 @@ KMLExporter.prototype.addRoute = function (route) {
 			var KMLRouteCoords = document.createElementNS(this.xmlns, "coordinates");
 			KMLRouteLineString.appendChild(KMLRouteCoords);
 			KMLRouteCoords.appendChild(document.createTextNode(coordString));
-			
+		
+		KMLRouteStyle.appendChild(document.createTextNode("distance-"+distanceRanking));
+			/*
 	if (route.rating == "good") {
 		KMLRouteStyle.appendChild(document.createTextNode(this.styleURLGood));
 	} else if (route.rating == "bad") {
 		KMLRouteStyle.appendChild(document.createTextNode(this.styleURLBad));
 	}
+	*/
 }
 
-KMLExporter.prototype.addPoint =  function(name, descriptionText, coordinates) {
+KMLExporter.prototype.addPoint =  function(name, descriptionText, longitude, latitude) {
 	
 	var KMLPoint = document.createElementNS(this.xmlns, "Placemark");
 		this.Document.appendChild(KMLPoint);
@@ -96,7 +114,8 @@ KMLExporter.prototype.addPoint =  function(name, descriptionText, coordinates) {
 		KMLPoint.appendChild(point);
 		var KMLcoordinates = document.createElementNS(this.xmlns, "coordinates");
 		point.appendChild(KMLcoordinates);
-		KMLcoordinates.appendChild(document.createTextNode(coordinates));
+		KMLcoordinates.appendChild(document.createTextNode(longitude+","+latitude+",0 "));
+		//longitude+","+latitude+",0 "
 		var KMLdescription = document.createElementNS(this.xmlns, "description");
 		KMLPoint.appendChild(KMLdescription);
 		KMLdescription.appendChild(document.createTextNode(descriptionText));
