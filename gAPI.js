@@ -80,12 +80,8 @@ function calcRoute(request) {
 						  lat: result.routes[j].overview_path[i].lat()
 						});
 				}
-<<<<<<< HEAD
-				routeKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating})
-=======
 				console.log("distanceRanking of route " + j + " is " + distanceRankings[j]);
-				demoKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating}, distanceRankings[j], numRoutes);
->>>>>>> master
+				routeKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating}, distanceRankings[j], numRoutes);
 			}
 			
 			//TODO: Get the rating from some external source.
