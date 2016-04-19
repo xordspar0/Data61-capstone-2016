@@ -115,7 +115,6 @@ KMLExporter.prototype.addPoint =  function(name, descriptionText, longitude, lat
 		var KMLcoordinates = document.createElementNS(this.xmlns, "coordinates");
 		point.appendChild(KMLcoordinates);
 		KMLcoordinates.appendChild(document.createTextNode(longitude+","+latitude+",0 "));
-		//longitude+","+latitude+",0 "
 		var KMLdescription = document.createElementNS(this.xmlns, "description");
 		KMLPoint.appendChild(KMLdescription);
 		KMLdescription.appendChild(document.createTextNode(descriptionText));
