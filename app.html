@@ -12,6 +12,11 @@
 			#map-canvas {
 				width: 800px;
 				height: 600px;
+				left: 300px;
+			}
+			#panel {
+				left: 0;
+				width: 300px;
 			}
 		</style>
 	</head>
@@ -19,6 +24,20 @@
 		<button onclick="requestRoutes()">Generate Route</button>
 		<button onclick="importFlickr()">Import from Social Media</button>
 		<a href="" id="download-button" download="route.kml" style="visibility: hidden">Download KML</a>
+		
+		<div class = 'panel'>
+			<div class='panel-header'></div>
+				<input id='check1' type='checkbox' checked>
+				<label for='check1'>Label1</label>
+				<input id='check2' type='checkbox' checked>
+				<label for='check2'>Label2</label>
+				<input id='check3' type='checkbox' checked>
+				<label for='check3'>Label3</label>
+				<input id='check4' type='checkbox' checked>
+				<label for='check4'>Label4</label>
+		</div>
+		
+		<div id="panel"></div>
 		<div id="map-canvas"></div>
 		
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAckvZi0REJrul6Ne0ncb4WrTfFPrfHFYU&signed_in=true&callback=initMap"
