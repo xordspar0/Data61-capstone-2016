@@ -2,6 +2,9 @@ var gDirectionsService;
 var gMap;
 var kmlLayer;
 
+var distance = 5;
+var routeBoxer = new RouteBoxer();
+
 
 var currentRating = "good"; //temporary for demo
 
@@ -41,7 +44,7 @@ function requestRoutes() {
 			+ encodeURIComponent(kmlDoc);
 	
 		// Update the map.
-		kmlLayer.setUrl("https://developers.google.com/maps/tutorials/kml/westcampus.kml");
+		kmlLayer.setUrl("demos/routes_mockup.kml");
 
 		// Update the download button.
 		var downloadButton = document.getElementById("download-button");
@@ -54,8 +57,6 @@ function requestRoutes() {
 function calcRoute(request) {
 	gDirectionsService.route(request, function(result, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
-			
-			directionsRenderer.setDirections(result);
 			
 			var path = result.routes[0].overview_path;
 			var boxes = routeBoxer.box(path, distance);
