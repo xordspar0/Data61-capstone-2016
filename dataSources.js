@@ -38,6 +38,7 @@ function importFlickr() {
 	};
 	
 	// Request the coordinates of a photo.
+	var currentPhotoIndex = 0; // Used to keep track of which photo to add the coordinates to.
 	coordRequest.onreadystatechange = function() {
 		if (coordRequest.readyState == 4 && coordRequest.status == 200) {
 			// Parse the GeoJSON into a JS object.
@@ -48,6 +49,7 @@ function importFlickr() {
 			// referenced using closure.)
 			photos[currentPhotoIndex].latitude = requestData.photo.location.latitude;
 			photos[currentPhotoIndex].longitude = requestData.photo.location.longitude;
+			currentPhotoIndex++;
 		} else if (photoRequest.status != 0 && photoRequest.status != 200) {
 			alert("Retrieving Flickr photo coordinates failed with HTTP response: " + photoRequest.status);
 		}
@@ -58,13 +60,12 @@ function importFlickr() {
 		"&tags=melbourne&has_geo=1&format=json&nojsoncallback=1", true);
 	photoRequest.send();
 	
-	var currentPhotoIndex;
 	setTimeout(function () {
 		// Make the location API request for each photo.
-		for (currentPhotoIndex = 0; currentPhotoIndex < photos.length; currentPhotoIndex++) {
+		for (var i = 0; i < photos.length; i++) {
 			coordRequest.open("GET", "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation" +
 				"&api_key=" + flickrAPIKey +
-				"&photo_id=" + photos[currentPhotoIndex].id +
+				"&photo_id=" + photos[i].id +
 				"&format=json&nojsoncallback=1");
 			coordRequest.send();
 		}
@@ -83,5 +84,5 @@ function importFlickr() {
 		downloadButton.setAttribute("href", "data:application/vnd.google-earth.kml+xml;charset=utf-8,"
 			+ encodeURIComponent(kmlDoc));
 		downloadButton.setAttribute("style", "");
-	}, 2000);
+	}, 20000);
 }
