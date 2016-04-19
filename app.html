@@ -24,8 +24,7 @@
 		</style>
 	</head>
 	<body>
-		<button onclick="requestRoutes()">Generate Route</button>
-		<button onclick="importFlickr()">Import from Social Media</button>
+		<button onclick="loadRoutes()">Generate Routes</button>
 		<a href="" id="download-button" download="route.kml" style="visibility: hidden">Download KML</a>
 		
 		<div id = 'panel'>
@@ -46,6 +45,11 @@
 
 		<script>
 			var routeKMLExporter = new KMLExporter();
+
+			function loadRoutes() {
+				requestRoutes(); // gAPI.js
+				importFlickr(); // dataSources.js
+			}
 		</script>
 	</body>
 </html>
