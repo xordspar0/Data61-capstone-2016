@@ -2,6 +2,7 @@ var gDirectionsService;
 var gMap;
 var kmlLayer;
 
+
 var currentRating = "good"; //temporary for demo
 
 function initMap() {
@@ -53,6 +54,13 @@ function requestRoutes() {
 function calcRoute(request) {
 	gDirectionsService.route(request, function(result, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
+			
+			directionsRenderer.setDirections(result);
+			
+			var path = result.routes[0].overview_path;
+			var boxes = routeBoxer.box(path, distance);
+			drawBoxes(boxes);
+			
 			var coordPairs;
 
 			var numRoutes = result.routes.length;
@@ -98,5 +106,19 @@ function calcRoute(request) {
 			alert("Directions request failed with the error: " + status);
 		}
 	});
+}
+
+function drawBoxes(boxes) {
+	boxpolys = new Array(boxes.length);
+	for (var i = 0; i < boxes.length; i++) {
+		boxpolys[i] = new google.maps.Rectangle({
+				bounds: boxes[i],
+				fillOpacity: 0,
+				strokeOpacity: 1.0,
+				strokeColor: '#000000',
+				storkeWeight: 1,
+				map: gMap
+		});
+	}
 }
 
