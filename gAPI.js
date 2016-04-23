@@ -28,7 +28,7 @@ function initMap() {
  */
 function requestRoutes() {
 	var routeRequest = {
-		origin: "Ballarat, VIC",
+		origin: "Perth, WA",
 		provideRouteAlternatives: true,
 		destination: "Melbourne, VIC",
 		travelMode: google.maps.TravelMode.DRIVING
@@ -70,16 +70,7 @@ function calcRoute(request) {
 				console.log(j);
 				distances.push(result.routes[j].legs[0].distance.value)
 			}
-			sortedDistances = distances.slice();
-			sortedDistances.sort(function(a, b){return a-b});
-			distanceRankings = []
-			for(var x = 0; x < distances.length; x++){
-				for(var y = 0; y < sortedDistances.length; y++){
-					if(distances[x] === sortedDistances[y]){
-						distanceRankings.push(y);
-					}
-				}
-			}
+			distanceRankings = rankArrayByIndex(distances);  
 			console.log(distanceRankings);
 			for(var j = 0; j < result.routes.length; j++){
 				coordPairs = [];
@@ -123,3 +114,16 @@ function drawBoxes(boxes) {
 	}
 }
 
+function rankArrayByIndex(arrayToSort){
+			sortedArray = arrayToSort.slice();
+			sortedArray.sort(function(a, b){return a-b});
+			arrayRankings = [];
+			for(var x = 0; x < arrayToSort.length; x++){
+				for(var y = 0; y < sortedArray.length; y++){
+					if(arrayToSort[x] === sortedArray[y]){
+						arrayRankings.push(y);
+					}
+				}
+			}
+			return (arrayRankings);
+}
