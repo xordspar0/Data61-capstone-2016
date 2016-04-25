@@ -29,9 +29,9 @@
 		
 		<div id = 'panel'>
 				<input id='check1' type='checkbox'>
-				<label for='check1'>Label1</label><br>
+				<label for='check1'>Flickr Data</label><br>
 				<input id='check2' type='checkbox'>
-				<label for='check2'>Label2</label><br>
+				<label for='check2'>Distances</label><br>
 				<input id='check3' type='checkbox'>
 				<label for='check3'>Label3</label><br>
 				<input id='check4' type='checkbox'>
@@ -47,8 +47,11 @@
 			var routeKMLExporter = new KMLExporter();
 
 			function loadRoutes() {
+				var isFlickrChecked = document.getElementById("check1").checked;
 				requestRoutes(); // gAPI.js
-				importFlickr(); // dataSources.js
+				if(isFlickrChecked == true){
+					importFlickr(); // dataSources.js
+				}
 			}
 		</script>
 	</body>

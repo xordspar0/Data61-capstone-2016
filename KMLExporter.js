@@ -59,11 +59,17 @@ var KMLExporter = function () {
 KMLExporter.prototype.addRoute = function (route, distanceRanking, numRoutes) {
 	// Convert the list of coordinates to a KML-compliant string.
 	var coordString = "";
+	var maxWidth = 10;
+	var isDistanceChecked = document.getElementById("check2").checked;
 	for (var i = 0; i < route.coordinates.length; i++) {
 		coordString += route.coordinates[i].lng + "," + route.coordinates[i].lat + "," + 0 + " ";
 	}
-	
-	var routeWidth = (Math.floor(20*((numRoutes - distanceRanking)/numRoutes))).toString();
+		
+	if(isDistanceChecked == true){
+		var routeWidth = (Math.floor(maxWidth*((numRoutes - distanceRanking)/numRoutes))).toString();
+	} else {
+		var routeWidth = maxWidth;
+	}
 	console.log("KMLExporter ran with distanceRanking:" + distanceRanking + " routeWidth: " + routeWidth +" numRoutes: "+numRoutes)
 	
 	var distanceStyle = document.createElementNS(this.xmlns, "Style");
