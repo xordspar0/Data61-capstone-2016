@@ -5,7 +5,6 @@ var kmlLayer;
 var distance = 5;
 var routeBoxer = new RouteBoxer();
 
-
 var currentRating = "good"; //temporary for demo
 
 function initMap() {
@@ -27,10 +26,12 @@ function initMap() {
  * Define some demo routes to display and call the Google API on each one.
  */
 function requestRoutes() {
+	var originString = document.getElementById("originBox").value.toString();
+	var destinationString = document.getElementById("destinationBox").value.toString();
 	var routeRequest = {
-		origin: "Perth, WA",
+		origin: originString,
 		provideRouteAlternatives: true,
-		destination: "Melbourne, VIC",
+		destination: destinationString,
 		travelMode: google.maps.TravelMode.DRIVING
 	};
 	

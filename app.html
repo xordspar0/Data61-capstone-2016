@@ -26,8 +26,16 @@
 	<body>
 		<button onclick="loadRoutes()">Generate Routes</button>
 		<a href="" id="download-button" download="route.kml" style="visibility: hidden">Download KML</a>
-		
+
 		<div id = 'panel'>
+				<table>
+					<tr>
+						<td>Origin </td><td><input id='originBox' value='Perth, WA'></td>
+					</tr>
+					<tr>
+						<td>Destination: </td><td><input id='destinationBox' value='Melbourne, VIC'></td>
+					</tr>
+				</table>
 				<input id='check1' type='checkbox'>
 				<label for='check1'>Flickr Data</label><br>
 				<input id='check2' type='checkbox'>
