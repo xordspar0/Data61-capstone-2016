@@ -33,15 +33,18 @@ function updateMap() {
 			// Update the embedded map on our page.
 			kmlLayer.setUrl(kmlFileRequest.response);
 
-			// Update the download button.
-			var downloadButton = document.getElementById("download-button");
-			downloadButton.setAttribute("href", kmlFileRequest.response);
-			downloadButton.setAttribute("style", "");
 		} else if (kmlFileRequest.readyState == 4 && kmlFileRequest.status == 200) {
 			alert("Retreiveing KML file failed with HTTP response: " + kmlFileRequest.status);
 		}
 	};
 
 	kmlFileRequest.send(kmlDocUri);
+
+	// Update the download button.
+	var downloadButton = document.getElementById("download-button");
+	downloadButton.setAttribute("href",
+		"data:application/vnd.google-earth.kml+xml;charset=utf-8," +
+		kmlDocUri);
+	downloadButton.setAttribute("style", "");
 }
 
