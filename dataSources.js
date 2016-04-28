@@ -32,7 +32,7 @@ function importFlickr() {
 				photos[i].contentString = '<div id="content">' + photos[i].htmlstring + '</div>';
 				photos[i].photoTitle = photoResults[i].title;
 			}
-		} else if (photoRequest.status != 0 && photoRequest.status != 200) {
+		} else if (photoRequest.status == 4 && photoRequest.status != 200) {
 			alert("Retrieving Flickr photos failed with HTTP response: " + photoRequest.status);
 		}
 	};

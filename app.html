@@ -5,8 +5,9 @@
 		<title>Plan a Route</title>
 		<meta name="description" content="Plan a route and see what the alternatives have to offer" />
 		<!-- <link href="main.css" type="text/css" rel="stylesheet" /> -->
-		<script type="text/javascript" src="gAPI.js"></script>
 		<script type="text/javascript" src="KMLExporter.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+		<script type="text/javascript" src="gAPI.js"></script>
 		<script type="text/javascript" src="dataSources.js"></script>
 		<style>
 			#map-canvas {
@@ -49,17 +50,5 @@
 		
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAckvZi0REJrul6Ne0ncb4WrTfFPrfHFYU&signed_in=true&callback=initMap"
 	    	async defer></script>
-
-		<script>
-			var routeKMLExporter = new KMLExporter();
-
-			function loadRoutes() {
-				var isFlickrChecked = document.getElementById("check1").checked;
-				requestRoutes(); // gAPI.js
-				if(isFlickrChecked == true){
-					importFlickr(); // dataSources.js
-				}
-			}
-		</script>
 	</body>
 </html>

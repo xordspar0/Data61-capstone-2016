@@ -31,27 +31,13 @@ function requestRoutes() {
 		travelMode: google.maps.TravelMode.DRIVING
 	};
 	
-	var routeCoords = calcRoute(routeRequest);
-	
-	// Delay before updating the download button so that the asyncronous calls
-	// to the Google Directions Service have time to finish.
-	setTimeout(function () {
-		var kmlDoc = routeKMLExporter.getKML();
-		kmlUrl = "data:application/vnd.google-earth.kml+xml;charset=utf-8,"
-			+ encodeURIComponent(kmlDoc);
-	
-		// Update the map.
-		kmlLayer.setUrl("demos/routes_mockup.kml");
-
-		// Update the download button.
-		var downloadButton = document.getElementById("download-button");
-		downloadButton.setAttribute("href", kmlUrl);
-		downloadButton.setAttribute("style", "");
-	}, 1000);
+	calcRoute(routeRequest, function () {
+		updateMap();
+	});
 
 }
 
-function calcRoute(request) {
+function calcRoute(request, callback) {
 	gDirectionsService.route(request, function(result, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
 			
@@ -77,7 +63,7 @@ function calcRoute(request) {
 				routeKMLExporter.addRoute(coordPairs, distanceRankings[j], numRoutes);
 			}
 
-			return coordPairs;
+			return callback();
 		}
 		else {
 			alert("Directions request failed with the error: " + status);
