@@ -2,7 +2,6 @@ var gDirectionsService;
 var gMap;
 var kmlLayer;
 
-var currentRating = "good"; //temporary for demo
 
 function initMap() {
 	// Initialize the map.
@@ -75,15 +74,7 @@ function calcRoute(request) {
 						});
 				}
 				console.log("distanceRanking of route " + j + " is " + distanceRankings[j]);
-				routeKMLExporter.addRoute({coordinates: coordPairs, rating: currentRating}, distanceRankings[j], numRoutes);
-			}
-			
-			//TODO: Get the rating from some external source.
-			if (currentRating == "good") {
-				currentRating = "bad";
-			}
-			else if (currentRating == "bad") {
-				currentRating = "good";
+				routeKMLExporter.addRoute(coordPairs, distanceRankings[j], numRoutes);
 			}
 
 			return coordPairs;

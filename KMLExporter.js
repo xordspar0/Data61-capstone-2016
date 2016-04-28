@@ -1,6 +1,4 @@
 var KMLExporter = function () {
-	this.styleURLGood = "good-route";
-	this.styleURLBad = "bad-route";
 	this.styleURLYelp = "yelp-point";
 	this.styleURLTweet = "tweet-point";
 	this.xmlns = "http://www.opengis.net/kml/2.2";
@@ -8,22 +6,6 @@ var KMLExporter = function () {
 	this.kmlroot = document.implementation.createDocument(this.xmlns, "kml", null);
 	this.Document = document.createElementNS(this.xmlns, "Document");
 		this.kmlroot.documentElement.appendChild(this.Document);
-		var styleGoodRoute = document.createElementNS(this.xmlns, "Style");
-			styleGoodRoute.setAttribute("id", this.styleURLGood);
-			this.Document.appendChild(styleGoodRoute);
-			var LineStyleGood = document.createElementNS(this.xmlns, "LineStyle");
-			styleGoodRoute.appendChild(LineStyleGood);
-			var colorGood = document.createElementNS(this.xmlns, "color");
-			LineStyleGood.appendChild(colorGood);
-			colorGood.appendChild(document.createTextNode("ff00ff00"));
-		var styleBadRoute = document.createElementNS(this.xmlns, "Style");
-			styleBadRoute.setAttribute("id", this.styleURLBad);
-			this.Document.appendChild(styleBadRoute);
-			var LineStyleBad = document.createElementNS(this.xmlns, "LineStyle");
-			styleBadRoute.appendChild(LineStyleBad);
-			var colorBad = document.createElementNS(this.xmlns, "color");
-			LineStyleBad.appendChild(colorBad);
-			colorBad.appendChild(document.createTextNode("ff0000ff"));
 		var styleYelp =  document.createElementNS(this.xmlns, "Style");
 			styleYelp.setAttribute("id", this.styleURLYelp);
 			this.Document.appendChild(styleYelp);
@@ -52,17 +34,16 @@ var KMLExporter = function () {
 
 /**
  * Add a route to the document.
- * The route parameter has the format:
- * {coordinates: Array<{lng: number, lat: number}>, rating: string}
- * where the rating string is "good" or "bad".
+ * The coordinates parameter has the format:
+ * Array<{lng: number, lat: number}>
  */
-KMLExporter.prototype.addRoute = function (route, distanceRanking, numRoutes) {
+KMLExporter.prototype.addRoute = function (coordinates, distanceRanking, numRoutes) {
 	// Convert the list of coordinates to a KML-compliant string.
 	var coordString = "";
 	var maxWidth = 10;
 	var isDistanceChecked = document.getElementById("check2").checked;
-	for (var i = 0; i < route.coordinates.length; i++) {
-		coordString += route.coordinates[i].lng + "," + route.coordinates[i].lat + "," + 0 + " ";
+	for (var i = 0; i < coordinates.length; i++) {
+		coordString += coordinates[i].lng + "," + coordinates[i].lat + "," + 0 + " ";
 	}
 		
 	if(isDistanceChecked == true){
@@ -98,13 +79,7 @@ KMLExporter.prototype.addRoute = function (route, distanceRanking, numRoutes) {
 			KMLRouteCoords.appendChild(document.createTextNode(coordString));
 		
 		KMLRouteStyle.appendChild(document.createTextNode("distance-"+distanceRanking));
-			/*
-	if (route.rating == "good") {
-		KMLRouteStyle.appendChild(document.createTextNode(this.styleURLGood));
-	} else if (route.rating == "bad") {
-		KMLRouteStyle.appendChild(document.createTextNode(this.styleURLBad));
-	}
-	*/
+
 }
 
 KMLExporter.prototype.addPoint =  function(name, descriptionText, longitude, latitude) {
