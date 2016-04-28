@@ -30,8 +30,10 @@ function updateMap() {
 
 	kmlFileRequest.onreadystatechange = function() {
 		if (kmlFileRequest.readyState == 4 && kmlFileRequest.status == 200) {
+			var kmlUrl = kmlFileRequest.responseText.replace(".com/", ".com/raw/");
+
 			// Update the embedded map on our page.
-			kmlLayer.setUrl(kmlFileRequest.response);
+			kmlLayer.setUrl(kmlUrl);
 
 		} else if (kmlFileRequest.readyState == 4 && kmlFileRequest.status == 200) {
 			alert("Retreiveing KML file failed with HTTP response: " + kmlFileRequest.status);
