@@ -14,7 +14,7 @@ function importFlickr() {
 	// Make the two API requests.
 	
 	var photoRequest = new XMLHttpRequest();
-	var coordRequest = new XMLHttpRequest();
+	var i = 0;
 	
 	// Request the photo URL and metadata.
 	photoRequest.onreadystatechange = function() {
@@ -24,34 +24,33 @@ function importFlickr() {
 			var photoResults = requestData.photos.photo;
 
 			// Store the metadata about each photo for later.
-			for (var i = 0; i < photoResults.length; i++) {
+			for (i; i < photoResults.length; i++) {
 				photos.push({});
 				photos[i].id = photoResults[i].id;
 				photos[i].photoURL = 'https://farm'+ photoResults[i].farm + '.static.flickr.com/'+ photoResults[i].server + '/' + photoResults[i].id + '_' + photoResults[i].secret + '_m.jpg';
 				photos[i].htmlstring = '<img src="' + photos[i].photoURL + '">';
 				photos[i].contentString = '<div id="content">' + photos[i].htmlstring + '</div>';
 				photos[i].photoTitle = photoResults[i].title;
+				
+				var coordRequest = new XMLHttpRequest();
+				
+				coordRequest.onreadystatechange = function() {
+					if (coordRequest.readyState == 4 && coordRequest.status == 200) {
+						// Parse the GeoJSON into a JS object.
+						var requestData = JSON.parse(coordRequest.responseText);
+			
+						// Store the coordinates of each photo for later.
+						// (currentPhotoIndex is defined outside this function and will be
+						// referenced using closure.)
+						photos[i].latitude = requestData.photo.location.latitude;
+						photos[i].longitude = requestData.photo.location.longitude;
+					} else if (photoRequest.status != 0 && photoRequest.status != 200) {
+						alert("Retrieving Flickr photo coordinates failed with HTTP response: " + photoRequest.status);
+					}
+				};
 			}
 		} else if (photoRequest.status == 4 && photoRequest.status != 200) {
 			alert("Retrieving Flickr photos failed with HTTP response: " + photoRequest.status);
-		}
-	};
-	
-	// Request the coordinates of a photo.
-	var currentPhotoIndex = 0; // Used to keep track of which photo to add the coordinates to.
-	coordRequest.onreadystatechange = function() {
-		if (coordRequest.readyState == 4 && coordRequest.status == 200) {
-			// Parse the GeoJSON into a JS object.
-			var requestData = JSON.parse(coordRequest.responseText);
-			
-			// Store the coordinates of each photo for later.
-			// (currentPhotoIndex is defined outside this function and will be
-			// referenced using closure.)
-			photos[currentPhotoIndex].latitude = requestData.photo.location.latitude;
-			photos[currentPhotoIndex].longitude = requestData.photo.location.longitude;
-			currentPhotoIndex++;
-		} else if (photoRequest.status != 0 && photoRequest.status != 200) {
-			alert("Retrieving Flickr photo coordinates failed with HTTP response: " + photoRequest.status);
 		}
 	};
 
