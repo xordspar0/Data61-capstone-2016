@@ -6,7 +6,7 @@ var KMLExporter = function () {
 	this.kmlroot = document.implementation.createDocument(this.xmlns, "kml", null);
 	this.Document = document.createElementNS(this.xmlns, "Document");
 		this.kmlroot.documentElement.appendChild(this.Document);
-		var styleYelp =  document.createElementNS(this.xmlns, "Style");
+		/*var styleYelp =  document.createElementNS(this.xmlns, "Style");
 			styleYelp.setAttribute("id", this.styleURLYelp);
 			this.Document.appendChild(styleYelp);
 			var LabelStyleYelp =  document.createElementNS(this.xmlns, "LabelStyle");
@@ -27,7 +27,7 @@ var KMLExporter = function () {
 			var colorModeTweet = document.createElementNS(this.xmlns, "colorMode")
 			LabelStyleTweet.appendChild(colorModeTweet);
 			colorTweet.appendChild(document.createTextNode("ffff0000"));
-			colorModeTweet.appendChild(document.createTextNode("normal"));
+			colorModeTweet.appendChild(document.createTextNode("normal"));*/
 			
 			
 }
@@ -40,10 +40,20 @@ var KMLExporter = function () {
 KMLExporter.prototype.addRoute = function (coordinates, distanceRanking, numRoutes) {
 	// Convert the list of coordinates to a KML-compliant string.
 	var coordString = "";
+	var coordStringBeauty = "";
+	var coordStringTime = "";
 	var maxWidth = 10;
 	var isDistanceChecked = document.getElementById("check2").checked;
+	var isTimeChecked = document.getElementById("check3").checked;
+	var isBeautyChecked = document.getElementById("check4").checked;
 	for (var i = 0; i < coordinates.length; i++) {
 		coordString += coordinates[i].lng + "," + coordinates[i].lat + "," + 0 + " ";
+		if(isBeautyChecked){
+			coordStringBeauty += (coordinates[i].lng-0.05) + "," + (coordinates[i].lat-0.05) + "," + 0 + " ";
+		}
+		if(isTimeChecked){
+			coordStringTime += (coordinates[i].lng-0.1) + "," + (coordinates[i].lat-0.1) + "," + 0 + " ";
+		}
 	}
 		
 	if(isDistanceChecked == true){
@@ -52,6 +62,9 @@ KMLExporter.prototype.addRoute = function (coordinates, distanceRanking, numRout
 		var routeWidth = maxWidth;
 	}
 	console.log("KMLExporter ran with distanceRanking:" + distanceRanking + " routeWidth: " + routeWidth +" numRoutes: "+numRoutes)
+	
+	beautyRanking = distanceRanking; //Temporary for demo
+	timeRanking = distanceRanking;
 	
 	var distanceStyle = document.createElementNS(this.xmlns, "Style");
 		this.Document.appendChild(distanceStyle);
@@ -64,6 +77,30 @@ KMLExporter.prototype.addRoute = function (coordinates, distanceRanking, numRout
 		var distanceWidth = document.createElementNS(this.xmlns, "width");
 		distanceLineStyle.appendChild(distanceWidth);
 		distanceWidth.appendChild(document.createTextNode(routeWidth));
+	
+	var beautyStyle = document.createElementNS(this.xmlns, "Style");
+		this.Document.appendChild(beautyStyle);
+		beautyStyle.setAttribute("id", "beauty-"+distanceRanking);
+		var beautyLineStyle = document.createElementNS(this.xmlns, "LineStyle");
+		beautyStyle.appendChild(beautyLineStyle);
+		var beautyColor = document.createElementNS(this.xmlns, "color");
+		beautyLineStyle.appendChild(beautyColor);
+		beautyColor.appendChild(document.createTextNode("ff00ff00"));
+		var beautyWidth = document.createElementNS(this.xmlns, "width");
+		beautyLineStyle.appendChild(beautyWidth);
+		beautyWidth.appendChild(document.createTextNode(routeWidth));
+		
+	var timeStyle = document.createElementNS(this.xmlns, "Style");
+		this.Document.appendChild(timeStyle);
+		timeStyle.setAttribute("id", "time-"+distanceRanking);
+		var timeLineStyle = document.createElementNS(this.xmlns, "LineStyle");
+		timeStyle.appendChild(timeLineStyle);
+		var timeColor = document.createElementNS(this.xmlns, "color");
+		timeLineStyle.appendChild(timeColor);
+		timeColor.appendChild(document.createTextNode("ff00ffff"));
+		var timeWidth = document.createElementNS(this.xmlns, "width");
+		timeLineStyle.appendChild(timeWidth);
+		timeWidth.appendChild(document.createTextNode(routeWidth));
 		
 	var KMLRoute = document.createElementNS(this.xmlns, "Placemark");
 		this.Document.appendChild(KMLRoute);
@@ -78,8 +115,41 @@ KMLExporter.prototype.addRoute = function (coordinates, distanceRanking, numRout
 			KMLRouteLineString.appendChild(KMLRouteCoords);
 			KMLRouteCoords.appendChild(document.createTextNode(coordString));
 		
-		KMLRouteStyle.appendChild(document.createTextNode("distance-"+distanceRanking));
-
+	KMLRouteStyle.appendChild(document.createTextNode("distance-"+distanceRanking));
+		
+		if(isBeautyChecked){
+			var KMLBeautyRoute = document.createElementNS(this.xmlns, "Placemark");
+				this.Document.appendChild(KMLBeautyRoute);
+				var KMLBeautyRouteName = document.createElementNS(this.xmlns, "name");
+				KMLBeautyRoute.appendChild(KMLBeautyRouteName);
+				KMLBeautyRouteName.appendChild(document.createTextNode("mockup2"));
+				var KMLRouteStyleBeauty = document.createElementNS(this.xmlns, "styleUrl");
+				KMLBeautyRoute.appendChild(KMLRouteStyleBeauty);
+				var KMLBeautyRouteLineString = document.createElementNS(this.xmlns, "LineString");
+					KMLBeautyRoute.appendChild(KMLBeautyRouteLineString);
+					var KMLBeautyRouteCoords = document.createElementNS(this.xmlns, "coordinates");
+					KMLBeautyRouteLineString.appendChild(KMLBeautyRouteCoords);
+					KMLBeautyRouteCoords.appendChild(document.createTextNode(coordStringBeauty));
+			
+			KMLRouteStyleBeauty.appendChild(document.createTextNode("beauty-"+beautyRanking));
+		}
+		
+		if(isTimeChecked){
+			var KMLTimeRoute = document.createElementNS(this.xmlns, "Placemark");
+				this.Document.appendChild(KMLTimeRoute);
+				var KMLTimeRouteName = document.createElementNS(this.xmlns, "name");
+				KMLTimeRoute.appendChild(KMLTimeRouteName);
+				KMLTimeRouteName.appendChild(document.createTextNode("mockup2"));
+				var KMLRouteStyleTime = document.createElementNS(this.xmlns, "styleUrl");
+				KMLTimeRoute.appendChild(KMLRouteStyleTime);
+				var KMLTimeRouteLineString = document.createElementNS(this.xmlns, "LineString");
+					KMLTimeRoute.appendChild(KMLTimeRouteLineString);
+					var KMLTimeRouteCoords = document.createElementNS(this.xmlns, "coordinates");
+					KMLTimeRouteLineString.appendChild(KMLTimeRouteCoords);
+					KMLTimeRouteCoords.appendChild(document.createTextNode(coordStringTime));
+			
+			KMLRouteStyleTime.appendChild(document.createTextNode("time-"+timeRanking));
+		}
 }
 
 KMLExporter.prototype.addPoint =  function(name, descriptionText, longitude, latitude) {
