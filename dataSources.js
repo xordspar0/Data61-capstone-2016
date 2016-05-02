@@ -27,6 +27,7 @@ function importFlickr() {
 
 			// Store the metadata about each photo for later.
 			for (i; i < photoResults.length; i++) {
+				console.log("In photorequest " + i);
 				photos.push({});
 				photos[i].id = photoResults[i].id;
 				photos[i].photoURL = 'https://farm'+ photoResults[i].farm + '.static.flickr.com/'+ photoResults[i].server + '/' + photoResults[i].id + '_' + photoResults[i].secret + '_m.jpg';
@@ -39,7 +40,7 @@ function importFlickr() {
 				coordRequest.onreadystatechange = function() {
 					if (coordRequest.readyState == 4 && coordRequest.status == 200) {
 						// Parse the GeoJSON into a JS object.
-						console.log("In coordrequest");
+						console.log("In coordrequest " + i);
 						var coordinateData = JSON.parse(coordRequest.responseText);
 			
 						// Store the coordinates of each photo for later.
@@ -57,23 +58,20 @@ function importFlickr() {
 							"&photo_id=" + photos[i].id +
 							"&format=json&nojsoncallback=1", false);
 						coordRequest.send();
-	
+						
+						routeKMLExporter.addPoint(photos[i].photoTitle, photos[i].contentString, photos[i].longitude, photos[i].latitude);
+						console.log("Point added " + photos[i].photoTitle);
 			}
 			
 		} else if (photoRequest.status == 4 && photoRequest.status != 200) {
 			alert("Retrieving Flickr photos failed with HTTP response: " + photoRequest.status);
 		}
 	};
-
+			
 	photoRequest.open("GET", "https://api.flickr.com/services/rest/?method=flickr.photos.search" +
 		"&api_key=" + flickrAPIKey +
-		"&tags=melbourne&has_geo=1&format=json&nojsoncallback=1", true);
+		"&tags=melbourne&has_geo=1&format=json&nojsoncallback=1", false);
 	photoRequest.send();
-	
-	// Add a point for each photo to the KML document.
-			for (var i = 0; i < photos.length; i++) {
-			routeKMLExporter.addPoint(photos[i].photoTitle, photos[i].contentString, photos[i].longitude, photos[i].latitude);
-			}
 			
 			updateMap();
 	
