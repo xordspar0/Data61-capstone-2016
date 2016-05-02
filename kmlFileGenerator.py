@@ -20,7 +20,7 @@ def application(environ, start_response):
     post_connection.request('POST', '/api/json/create', request_body, {'Content-Type': 'application/json'})
     post_data = json.loads(post_connection.getresponse().read())
 
-    response_body = 'paste.kde.org/{}/{}/raw'.format(post_data['result']['id'], post_data['result']['hash'])
+    response_body = 'https://paste.kde.org/{}/{}/raw/routes.kml'.format(post_data['result']['id'], post_data['result']['hash'])
 
     # Send the URL back to the client.
     status = '200 OK'
