@@ -34,9 +34,7 @@ function updateMap() {
 			var kmlUrl = kmlFileRequest.responseText;
 
 			// Update the embedded map on our page.
-			//kmlLayer.setUrl(kmlUrl);
-			kmlLayer.setUrl("route.kml");
-			alert(kmlUrl);
+			kmlLayer.setUrl(kmlUrl);
 
 		} else if (kmlFileRequest.readyState == 4 && kmlFileRequest.status == 200) {
 			alert("Retreiveing KML file failed with HTTP response: " + kmlFileRequest.status);
