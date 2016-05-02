@@ -21,7 +21,8 @@ function loadRoutes() {
  */
 function updateMap() {
 	var kmlFileGeneratorUrl = "http://107.170.62.53/wsgi/kmlFileGenerator.py";
-	var kmlDocUri = encodeURIComponent(routeKMLExporter.getKML());
+	var kmlDoc = routeKMLExporter.getKML();
+	var kmlDocUri = encodeURIComponent(kmlDoc);
 
 	// Create a KML file with the given coordinates.
 	var kmlFileRequest = new XMLHttpRequest();
@@ -30,17 +31,19 @@ function updateMap() {
 
 	kmlFileRequest.onreadystatechange = function() {
 		if (kmlFileRequest.readyState == 4 && kmlFileRequest.status == 200) {
-			var kmlUrl = kmlFileRequest.responseText.replace(".com/", ".com/raw/");
+			var kmlUrl = kmlFileRequest.responseText;
 
 			// Update the embedded map on our page.
-			kmlLayer.setUrl(kmlUrl);
+			//kmlLayer.setUrl(kmlUrl);
+			kmlLayer.setUrl("route.kml");
+			alert(kmlUrl);
 
 		} else if (kmlFileRequest.readyState == 4 && kmlFileRequest.status == 200) {
 			alert("Retreiveing KML file failed with HTTP response: " + kmlFileRequest.status);
 		}
 	};
 
-	kmlFileRequest.send(kmlDocUri);
+	kmlFileRequest.send(kmlDoc);
 
 	// Update the download button.
 	var downloadButton = document.getElementById("download-button");
