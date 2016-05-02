@@ -8,6 +8,7 @@
 var routeKMLExporter = new KMLExporter();
 
 function loadRoutes() {
+	document.getElementById("download-button").style.visibility = "hidden";
 	var isFlickrChecked = document.getElementById("check1").checked;
 	requestRoutes(); // gAPI.js
 	if(isFlickrChecked == true){

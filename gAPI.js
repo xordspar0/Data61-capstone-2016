@@ -32,8 +32,6 @@ function requestRoutes() {
 	};
 	
 	calcRoute(routeRequest, function () {
-			var isFlickrChecked = document.getElementById("check1").checked;
-			if(isFlickrChecked==false)
 				updateMap();
 	});
 
