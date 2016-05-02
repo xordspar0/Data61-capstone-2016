@@ -16,6 +16,8 @@ function importFlickr() {
 	var photoRequest = new XMLHttpRequest();
 	var i = 0;
 	
+	
+	
 	// Request the photo URL and metadata.
 	photoRequest.onreadystatechange = function() {
 		if (photoRequest.readyState == 4 && photoRequest.status == 200) {
@@ -25,6 +27,7 @@ function importFlickr() {
 
 			// Store the metadata about each photo for later.
 			for (i; i < photoResults.length; i++) {
+				console.log("In photorequest " + i);
 				photos.push({});
 				photos[i].id = photoResults[i].id;
 				photos[i].photoURL = 'https://farm'+ photoResults[i].farm + '.static.flickr.com/'+ photoResults[i].server + '/' + photoResults[i].id + '_' + photoResults[i].secret + '_m.jpg';
@@ -37,51 +40,39 @@ function importFlickr() {
 				coordRequest.onreadystatechange = function() {
 					if (coordRequest.readyState == 4 && coordRequest.status == 200) {
 						// Parse the GeoJSON into a JS object.
-						var requestData = JSON.parse(coordRequest.responseText);
+						console.log("In coordrequest " + i);
+						var coordinateData = JSON.parse(coordRequest.responseText);
 			
 						// Store the coordinates of each photo for later.
-						// (currentPhotoIndex is defined outside this function and will be
-						// referenced using closure.)
-						photos[i].latitude = requestData.photo.location.latitude;
-						photos[i].longitude = requestData.photo.location.longitude;
+						photos[i].latitude = coordinateData.photo.location.latitude;
+						photos[i].longitude = coordinateData.photo.location.longitude;
+						
 					} else if (photoRequest.status != 0 && photoRequest.status != 200) {
 						alert("Retrieving Flickr photo coordinates failed with HTTP response: " + photoRequest.status);
 					}
 				};
+				
+						// Make the location API request for each photo.
+						coordRequest.open("GET", "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation" +
+							"&api_key=" + flickrAPIKey +
+							"&photo_id=" + photos[i].id +
+							"&format=json&nojsoncallback=1", false);
+						coordRequest.send();
+						
+						routeKMLExporter.addPoint(photos[i].photoTitle, photos[i].contentString, photos[i].longitude, photos[i].latitude);
+						console.log("Point added " + photos[i].photoTitle);
 			}
+			
 		} else if (photoRequest.status == 4 && photoRequest.status != 200) {
 			alert("Retrieving Flickr photos failed with HTTP response: " + photoRequest.status);
 		}
 	};
-
+			
 	photoRequest.open("GET", "https://api.flickr.com/services/rest/?method=flickr.photos.search" +
 		"&api_key=" + flickrAPIKey +
-		"&tags=melbourne&has_geo=1&format=json&nojsoncallback=1", true);
+		"&tags=melbourne&has_geo=1&format=json&nojsoncallback=1", false);
 	photoRequest.send();
+			
+			updateMap();
 	
-	setTimeout(function () {
-		// Make the location API request for each photo.
-		for (var i = 0; i < photos.length; i++) {
-			coordRequest.open("GET", "https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation" +
-				"&api_key=" + flickrAPIKey +
-				"&photo_id=" + photos[i].id +
-				"&format=json&nojsoncallback=1");
-			coordRequest.send();
-		}
-	}, 1000);
-
-	setTimeout(function () {
-		// Add a point for each photo to the KML document.
-		for (var i = 0; i < photos.length; i++) {
-			routeKMLExporter.addPoint(photos[i].photoTitle, photos[i].contentString, photos[i].longitude, photos[i].latitude);
-		}
-		
-		// (Re)load the "Download KML" button.
-		var kmlDoc = routeKMLExporter.getKML();
-	
-		var downloadButton = document.getElementById("download-button");
-		downloadButton.setAttribute("href", "data:application/vnd.google-earth.kml+xml;charset=utf-8,"
-			+ encodeURIComponent(kmlDoc));
-		downloadButton.setAttribute("style", "");
-	}, 20000);
 }

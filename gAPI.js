@@ -32,7 +32,9 @@ function requestRoutes() {
 	};
 	
 	calcRoute(routeRequest, function () {
-		updateMap();
+			var isFlickrChecked = document.getElementById("check1").checked;
+			if(isFlickrChecked==false)
+				updateMap();
 	});
 
 }
