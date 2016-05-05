@@ -1,3 +1,26 @@
+/*  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*            Itinerary Visualization on Australia's National Map
+*  			
+*                                Data61                     
+*                                                                       
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*   
+*              Name: gAPI.js
+*     Creation Date: 2/16/2016
+*            Author: J.Christiansen, J.Osborne, R.Clayton, S.Warne
+*  
+*     Description: This file contains the functions that will request the 
+*                  route based upon the origin and destination the user
+*                  enters. It will also rank the routes that are returned by
+*                  their distances.
+* 
+*	  Code Review:	Code reviewed 5/02/2016 J.Christiansen, J.Osborne, 
+*                                           R.Clayton, S.Warne
+*  
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 var gDirectionsService;
 var gMap;
 var kmlLayer;

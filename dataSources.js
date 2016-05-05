@@ -1,12 +1,29 @@
-/*
- * importFlicker(): Import photos from Flickr that are relevant to our map and
- * put them into the KML document.
- * 
- * The Flickr API requires one call for the photos themselves and a separate one
- * for the coordinates, so there are two API calls here. After retrieving and
- * parsing both of the responses, make a point in the KML document for each
- * photo.
- */
+/*  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*            Itinerary Visualization on Australia's National Map
+*  			
+*                                Data61                     
+*                                                                       
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*   
+*              Name: dataSources.js
+*     Creation Date: 3/07/2016
+*            Author: J.Christiansen, J.Osborne, R.Clayton, S.Warne
+*  
+*     Description: This file contains the functions to import photos from
+*                  Flickr that are relevant to our map and put them into the
+*                  KML document. The Flicr API requires one call for the photos
+*                  themselves and a separate one for the coordinates, so there
+*                  are two API calls here. After retrieving and parsing both
+*                  of the responses, we make a point in teh KML document for
+*                  each photo.
+* 
+*	  Code Review:	Code reviewed 5/02/2016 J.Christiansen, J.Osborne, 
+*                                           R.Clayton, S.Warne
+*  
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 function importFlickr() {
 	var flickrAPIKey = "507f246fac5f95dfdedde2c2b939de5e";
 	var photos = [];

@@ -1,9 +1,23 @@
-/*
- * app.js
- *
- * These functions are things that relate directly to the  UI in our route
- * application.
- */
+/*  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*            Itinerary Visualization on Australia's National Map
+*  			
+*                                Data61                     
+*                                                                       
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*   
+*              Name: app.js
+*     Creation Date: 4/28/2016
+*            Author: J.Christiansen, J.Osborne, R.Clayton, S.Warne
+*  
+*     Description: This file contains functions that relate directly to
+*                  the UI in our route application.
+* 
+*	  Code Review:	Code reviewed 5/02/2016 J.Christiansen, J.Osborne, 
+*                                           R.Clayton, S.Warne
+*  
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 var routeKMLExporter = new KMLExporter();
 

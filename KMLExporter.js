@@ -1,3 +1,24 @@
+/*  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+*            Itinerary Visualization on Australia's National Map
+*  			
+*                                Data61                     
+*                                                                       
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*   
+*              Name: KMLExporter.js
+*     Creation Date: 2/16/2016
+*            Author: J.Christiansen, J.Osborne, R.Clayton, S.Warne
+*  
+*     Description: This file contains the functions that will create the KML
+*                  to be exported to the user. 
+* 
+*	  Code Review:	Code reviewed 5/02/2016 J.Christiansen, J.Osborne, 
+*                                           R.Clayton, S.Warne
+*  
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 var KMLExporter = function () {
 	this.styleURLYelp = "yelp-point";
 	this.styleURLTweet = "tweet-point";
