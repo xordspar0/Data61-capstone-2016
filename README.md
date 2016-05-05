@@ -16,7 +16,7 @@ there should be others, such as Yelp and Foursquare. More data sources can be
 added as functions in `dataSources.js`. New functions added there have two
 responsibilities: 1) they should add features that need to go on the map using
 the `routeKMLExporter` object, and 2) when all of the features have been added,
-they should call `updateMap()`, loads the new map into the Google map and
+they should call `updateMap()`, which loads the new map into the Google map and
 updates the download link.
 
 The application is also designed to be able to support more route evaluation
