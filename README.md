@@ -37,7 +37,10 @@ publicly accessible server, and it needs to end in ".kml".
 2. Currently, we host our KML files on a pastebin service so that they are
 accessible to Google. If we had known about the restrictions of Google Maps
 earlier, we probably would have simply written some server-side code to
-generate KML files and return a publically accessible URL.
+generate KML files and return a publically accessible URL. **For the web
+application to work properly in its current state, the kmlFileGenerator.py
+script has to be hosted on a server. `app.js/updateMap()` must point to this
+script.**
 
 3. Google Maps does not have complete support of KML. It disregards some style
 information when loading KML files. You can load the same KML files in Google
